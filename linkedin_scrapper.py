@@ -1,20 +1,16 @@
-import csv
 from requests_html import HTML, HTMLSession
 
 # fetch jobs data
-
-
 def fetch(role, location):
     url = "https://in.linkedin.com/jobs/search?keywords={}&location={}&position=1&pageNum=0".format(
         role, location)
     try:
         session = HTMLSession()
         response = session.get(url)
-        container = response.html.find(
-            ".jobs-search__results-list", first=True)
-        list = container.find("li")
+        container = response.html.find(".jobs-search__results-list", first=True)
+        joblist = container.find("li")
         results = []
-        for item in list:
+        for item in joblist:
             elements = item.text.split("\n")
             role = elements[0]
             company = elements[2]
